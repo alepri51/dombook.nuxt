@@ -18,7 +18,7 @@ export default {
         ]
     },
     router: {
-        middleware: ['auth']
+        //middleware: ['auth']
     },
     /*
     ** Add server middleware
@@ -27,7 +27,7 @@ export default {
     */
     serverMiddleware: [
         // body-parser middleware
-        bodyParser.json(),
+        //bodyParser.json(),
         // session middleware
         session({
             secret: 'super-secret-key',
