@@ -5,9 +5,8 @@ export default {
     build: {
         extend (config, { isClient }) {
             // Extend only webpack config for client-bundle
-            if (isClient) {
-              config.devtool = '#eval-source-map'
-            }
+            isClient && (config.devtool = 'eval-source-map');
+            
         }
     },
     head: {
@@ -17,6 +16,9 @@ export default {
             { name: 'viewport', content: 'width=device-width, initial-scale=1' },
             { hid: 'description', content: 'Auth Routes example' }
         ]
+    },
+    router: {
+        middleware: ['auth']
     },
     /*
     ** Add server middleware

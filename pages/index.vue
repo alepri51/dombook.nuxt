@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     async login() {
-        debugger
+        
       try {
         await this.$store.dispatch('login', {
           username: this.formUsername,

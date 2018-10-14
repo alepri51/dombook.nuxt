@@ -18,6 +18,7 @@ export const actions = {
     }
   },
   async login({ commit }, { username, password }) {
+    debugger
     try {
       const { data } = await axios.post('/api/login', { username, password })
       commit('SET_USER', data)
