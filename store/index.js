@@ -1,38 +1,20 @@
-import axios from 'axios'
+export const getters = {
+  isAuthenticated(state) {
+    return state.auth.loggedIn
+  },
 
-export const state = () => ({
-  authUser: null
-})
+  loggedInUser(state) {
+    return state.auth.user
+  }
+}
 
 export const mutations = {
-  SET_USER: function (state, user) {
-    state.authUser = user
-  }
+    PUSH_ROUTE(state, route) {
+        state.history.push(route);
+    }
 }
 
-export const actions = {
-  // nuxtServerInit is called by Nuxt.js before server-rendering every page
-  nuxtServerInit({ commit }, { req }) {
-    if (req.session && req.session.authUser) {
-      commit('SET_USER', req.session.authUser)
-    }
-  },
-  async login({ commit }, { username, password }) {
-    debugger
-    try {
-      const { data } = await axios.post('/api/login', { username, password })
-      commit('SET_USER', data)
-    } catch (error) {
-      if (error.response && error.response.status === 401) {
-        throw new Error('Bad credentials')
-      }
-      throw error
-    }
-  },
+export const state = () => ({
+    history: []
+})
 
-  async logout({ commit }) {
-    await axios.post('/api/logout')
-    commit('SET_USER', null)
-  }
-
-}
