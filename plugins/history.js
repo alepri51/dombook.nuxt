@@ -3,8 +3,12 @@ import {mutations} from '../store/index'
 export default function ({ app }) {
     //debugger
     const redirect = function (name, noRouter = false) {
+
         debugger
-        this.from && (name = this.from);
+        let to = '/' + name;
+
+        if(name !== 'login' && this.options.redirect[name]) return
+        /* this.from && (name = this.from);
         let to = '/' + name;
         const from = this.options.fullPathRedirect ? this.ctx.route.fullPath : this.ctx.route.path;
         
@@ -15,7 +19,8 @@ export default function ({ app }) {
         
         this.ctx.route.meta.push(from);
 
-        this.from = from;
+        this.from = from; */
+        const from = this.options.fullPathRedirect ? this.ctx.route.fullPath : this.ctx.route.path;
 
         if (process.browser) {
             if (noRouter) {
@@ -24,8 +29,8 @@ export default function ({ app }) {
                 this.ctx.redirect(to)
             }
         } else {
-            this.ctx.redirect(to);
-            //this.ctx.redirect(to, { ...this.ctx.route.query, redirect: from })
+            //this.ctx.redirect(to);
+            this.ctx.redirect(to, { ...this.ctx.route.query, redirect: from })
         }
         /* if(process.browser) {
             console.log('window', window.location.href);
