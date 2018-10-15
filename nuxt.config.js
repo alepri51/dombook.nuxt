@@ -10,7 +10,7 @@ module.exports = {
     },
 
     router: {
-        middleware: [ 'history']
+        //middleware: [ 'history']
     },
     /*
     ** Headers of the page
@@ -40,6 +40,9 @@ module.exports = {
         ** Run ESLint on save
         */
         extend (config, { isDev, isClient }) {
+            if(process.browser) {
+                console.log('window', window.location.href);
+            }
             isClient && (config.devtool = 'eval-source-map');
 
             /* if (isDev && isClient) {
@@ -59,7 +62,7 @@ module.exports = {
 
     plugins: [
         //'~/plugins/history.js'
-        {src: '~/plugins/intercept.js', ssr: false}
+        //{src: '~/plugins/intercept.js', ssr: false}
     ],
 
     modules: [
@@ -74,7 +77,7 @@ module.exports = {
 
     auth: {
         plugins: [
-            //'~/plugins/history.js'
+            '~/plugins/history.js'
         ],
         strategies: {
             local: {

@@ -1,9 +1,52 @@
-export const isSameURL = (a, b) => a.split('?')[0] === b.split('?')[0]
+import {mutations} from '../store/index'
+
+export default function ({ app }) {
+    //debugger
+    const redirect = function (name, noRouter = false) {
+        debugger
+        this.from && (name = this.from);
+        let to = '/' + name;
+        const from = this.options.fullPathRedirect ? this.ctx.route.fullPath : this.ctx.route.path;
+        
+        if(!process.browser) {
+            const fs = require('fs');
+            fs.writeFileSync('saved.txt', from);
+        } 
+        
+        this.ctx.route.meta.push(from);
+
+        this.from = from;
+
+        if (process.browser) {
+            if (noRouter) {
+                window.location.replace(to)
+            } else {
+                this.ctx.redirect(to)
+            }
+        } else {
+            this.ctx.redirect(to);
+            //this.ctx.redirect(to, { ...this.ctx.route.query, redirect: from })
+        }
+        /* if(process.browser) {
+            console.log('window', window.location.href);
+        } */
+        console.log('from', from);
+    }
+
+    app.$auth.redirect = redirect.bind(app.$auth)
+
+    if(process.browser) {
+    }
+}
+/* export const isSameURL = (a, b) => a.split('?')[0] === b.split('?')[0]
 
 export const isRelativeURL = u =>
   u && u.length && /^\/[a-zA-Z0-9@\-%_~][/a-zA-Z0-9@\-%_~]*[?]?([^#]*)#?([^#]*)$/.test(u)
 
 export default function ({ app }) {
+    if(process.browser) {
+        console.log('window', window.location.href);
+    }
     //debugger
   const redirect = function (name, noRouter = false) {
     if (!this.options.redirect) {
@@ -50,4 +93,4 @@ export default function ({ app }) {
   }
 
   app.$auth.redirect = redirect.bind(app.$auth)
-}
+} */
