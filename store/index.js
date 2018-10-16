@@ -1,5 +1,3 @@
-
-
 export const getters = {
   isAuthenticated(state) {
     return state.auth.loggedIn
@@ -13,10 +11,16 @@ export const getters = {
 export const mutations = {
     PUSH_ROUTE(state, route) {
         state.history.push(route);
+    },
+    AUTH_REDIRECT(state, redirect) {
+        debugger
+        state.redirect = { ...state.redirect, ...redirect };
+        redirect.from && state.history.push(redirect.from);
     }
 }
 
 export const state = () => ({
-    history: []
+    history: [],
+    //redirect: {}
 })
 

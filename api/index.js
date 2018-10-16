@@ -12,12 +12,12 @@ const app = express();
 
 router.use(express.json());
 
-router.use(session({
+/* router.use(session({
     secret: 'super-secret-key',
     resave: false,
     saveUninitialized: false,
     cookie: { maxAge: 60000 }
-}));
+})); */
 
 router.use((req, res, next) => {
     Object.setPrototypeOf(req, app.request)
@@ -27,7 +27,7 @@ router.use((req, res, next) => {
     next()
 });
 
-app.use(
+router.use(
     jwt({ secret: 'dummy' }).unless({
         path: '/api/login'
     })
@@ -50,7 +50,10 @@ router.post('/login', (req, res) => {
             name: 'User ' + username,
             scope: ['test', 'user']
         },
-        'dummy'
+        'dummy',
+        {
+            expiresIn: '10s'
+        }
     );
     
     res.json({
@@ -64,11 +67,23 @@ router.all('/me', (req, res) => {
     return res.json({ user: { username: 'demo' }})
 })
 
+router.all('/building', (req, res) => {
+    return res.json({ building: { id: 'demo' }})
+})
+
 // Add POST - /api/logout
 router.all('/logout', (req, res) => {
-    delete req.session.authUser
+    //delete req.session.authUser
     res.json({ ok: true })
 })
+
+router.use(
+    function (err, req, res, next) {
+        if (err.name === 'UnauthorizedError') {
+            res.status(401).send('invalid token...');
+        } 
+    }
+);
 
 // Export the server middleware
 export default {

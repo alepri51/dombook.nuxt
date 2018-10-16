@@ -78,8 +78,8 @@ export default {
             password: this.password,
           },
         });
-        debugger
-        this.$router.replace(decodeURIComponent(this.$route.query.redirect || "/"))
+        //debugger
+        this.$router.replace(this.$auth.ctx.route.query.redirect || this.$auth.ctx.route.path);
         //this.$router.back();
       } catch (e) {
         this.error = e.response.data.message;

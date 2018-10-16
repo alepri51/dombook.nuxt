@@ -40,9 +40,6 @@ module.exports = {
         ** Run ESLint on save
         */
         extend (config, { isDev, isClient }) {
-            if(process.browser) {
-                console.log('window', window.location.href);
-            }
             isClient && (config.devtool = 'eval-source-map');
 
             /* if (isDev && isClient) {
@@ -68,7 +65,8 @@ module.exports = {
     modules: [
         '@nuxtjs/vuetify',
         '@nuxtjs/axios', 
-        '@nuxtjs/auth'
+        '@nuxtjs/auth',
+        //'~/modules/auth-intercept',
     ],
 
     axios: {
@@ -77,8 +75,9 @@ module.exports = {
 
     auth: {
         plugins: [
-            '~/plugins/history.js'
+            {src: '~/plugins/redirect-fix.js', ssr: true}
         ],
+        cookie: false,
         strategies: {
             local: {
                 rewriteRedirects: true,
