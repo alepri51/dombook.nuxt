@@ -4,8 +4,9 @@ export const isRelativeURL = u => u && u.length && /^\/[a-zA-Z0-9@\-%_~][/a-zA-Z
 
 export default function ({ app }) {
     const redirect = function (name, noRouter = false) {
+        //debugger;
+
         if(process.client) {
-            //debugger;
         }
 
         if (!this.options.redirect) return;

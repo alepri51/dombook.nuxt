@@ -2,7 +2,6 @@
   <div style="display: flex; flex-direction: column; height: 100vh">
     <Navbar/>
     <nuxt style="flex: 1"/>
-    <foot/>
   </div>
 </template>
 
@@ -12,8 +11,7 @@ import foot from '~/components/footer';
 
 export default {
   components: {
-    Navbar,
-    foot
+    Navbar
   }
 };
 </script>

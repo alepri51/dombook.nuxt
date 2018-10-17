@@ -28,9 +28,10 @@ router.use((req, res, next) => {
 });
 
 router.use(
-    jwt({ secret: 'dummy' }).unless({
-        path: '/api/login'
-    })
+    jwt({ secret: 'dummy' })
+        .unless({
+            path: ['/api/login', '/api/logout']
+        })
 );
 
 // Add POST - /api/login
@@ -46,6 +47,7 @@ router.post('/login', (req, res) => {
     const accessToken = jsonwebtoken.sign(
         {
             username,
+            email: 'email',
             picture: 'https://github.com/nuxt.png',
             name: 'User ' + username,
             scope: ['test', 'user']
@@ -64,11 +66,11 @@ router.post('/login', (req, res) => {
 })
 
 router.all('/me', (req, res) => {
-    return res.json({ user: { username: 'demo' }})
+    return res.json({ user: { username: 'demo', email: 'email' }})
 })
 
-router.all('/building', (req, res) => {
-    return res.json({ building: { id: 'demo' }})
+router.all('/building/:id', (req, res) => {
+    return res.json({ building: { id: 'demo', _id: req.params.id }})
 })
 
 // Add POST - /api/logout

@@ -3,9 +3,9 @@
     <h1 v-if="error.statusCode === 404">Page not found</h1>
     <div  v-else>
         <h1>An error occurred</h1>
-        <h4>{{ error }}</h4>
+        <h4 v-html="error"></h4>
     </div>
-    <nuxt-link to="/">Home page</nuxt-link>
+    <nuxt-link to="/" @click="$router.go('/')">Home page</nuxt-link>
   </div>
 </template>
 
@@ -14,7 +14,7 @@ export default {
     layout: 'dark',
     props: {
         error: {
-            type: Object,
+            //type: Object,
             default: null
         }
     }

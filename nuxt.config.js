@@ -11,19 +11,20 @@ module.exports = {
 
     router: {
         //middleware: [ 'history']
+        //middleware: ['auth']
     },
     /*
     ** Headers of the page
     */
     head: {
-        title: 'nuxt-auth',
+        title: 'dombook.ru',
         meta: [
             { charset: 'utf-8' },
             { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-            { hid: 'description', name: 'description', content: 'Nuxt.js project' }
+            { hid: 'description', name: 'description', content: 'dombook.ru' }
         ],
         link: [
-            { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+            { rel: 'icon', type: 'image/x-icon', href: 'favicon.ico?v2' },
             { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Montserrat:100i,300,400,500,600,700&amp;subset=cyrillic' },
             { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css' }
         ]
@@ -75,9 +76,10 @@ module.exports = {
 
     auth: {
         plugins: [
-            {src: '~/plugins/redirect-fix.js', ssr: true}
+            '~/plugins/redirect-fix.js'
         ],
         cookie: false,
+        resetOnError: true,
         strategies: {
             local: {
                 rewriteRedirects: true,

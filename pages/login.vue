@@ -79,7 +79,7 @@ export default {
           },
         });
         //debugger
-        this.$router.replace(this.$auth.ctx.route.query.redirect || this.$auth.ctx.route.path);
+        this.$router.replace(this.$auth.ctx.route.query.redirect || this.$auth.ctx.from.path);
         //this.$router.back();
       } catch (e) {
         this.error = e.response.data.message;

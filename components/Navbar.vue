@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar is-light">
-    <div class="container">
+    <div>
       <div class="navbar-brand">
         <nuxt-link class="navbar-item" to="/">Nuxt Auth</nuxt-link>
 
