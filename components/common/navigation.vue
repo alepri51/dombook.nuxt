@@ -5,9 +5,9 @@
         <v-layout row wrap justify-space-between :align-end="$vuetify.breakpoint.smAndDown">
             <v-flex d-flex align-start xs4 sm3 md2 lg2 xl2>
                 <v-toolbar-title class="toolbar-title">
-                    <a tag="div" href="/">
+                    <nuxt-link tag="div" to="/" style="cursor: pointer">
                         <img class="logo" src="~/assets/images/DB_logo_Black_Green.svg" alt="dombook.ru - все новостройки, точный подбор, никакой рекламы.">
-                    </a>
+                    </nuxt-link>
                 </v-toolbar-title>
             </v-flex>
             <no-ssr>
