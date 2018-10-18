@@ -3,6 +3,8 @@ import session from 'express-session'
 import jwt from 'express-jwt'
 import jsonwebtoken from 'jsonwebtoken'
 
+import axios from 'axios';
+
 // Create express router
 const router = express.Router();
 
@@ -30,10 +32,21 @@ router.use((req, res, next) => {
 router.use(
     jwt({ secret: 'dummy' })
         .unless({
-            path: ['/api/login', '/api/logout']
+            path: ['/api/login', '/api/logout', '/api/hot', '/api/me']
         })
 );
 
+router.all('/hot', async (req, res, next) => {
+    try {
+        let response = await axios.get('http://localhost:8001/api/landing');
+        return res.json(response.data);
+    }
+    catch(err) {
+        console.log(err);
+        return next(err);
+    }
+
+});
 // Add POST - /api/login
 router.post('/login', (req, res) => {
     if (req.body.username === 'demo' && req.body.password === 'demo') {
@@ -83,7 +96,13 @@ router.use(
     function (err, req, res, next) {
         if (err.name === 'UnauthorizedError') {
             res.status(401).send('invalid token...');
-        } 
+        }
+        else {
+            delete err.config;
+            delete err.request;
+            let error = JSON.stringify(err);
+            res.status(error.httpStatusCode || 400).json(JSON.parse(error));
+        }
     }
 );
 

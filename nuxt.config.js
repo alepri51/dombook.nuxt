@@ -26,7 +26,7 @@ module.exports = {
         link: [
             { rel: 'icon', type: 'image/x-icon', href: 'favicon.ico?v2' },
             { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Montserrat:100i,300,400,500,600,700&amp;subset=cyrillic' },
-            { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css' }
+            /* { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css' } */
         ]
     },
     /*
@@ -37,6 +37,8 @@ module.exports = {
     ** Build configuration
     */
     build: {
+        vendor: ['axios', 'vuetify'],
+        extractCss: true,
         /*
         ** Run ESLint on save
         */
@@ -69,6 +71,21 @@ module.exports = {
         '@nuxtjs/auth',
         //'~/modules/auth-intercept',
     ],
+
+    vuetify: {
+        theme: {
+            primary: '#A9C833',
+            secondary: '#5300BC',
+            secondaryLighten1: '#7831D1',
+            secondaryLighten2: '#9154DD',
+            secondaryLighten3: '#AC7AEA',
+            darkGrey: '#2E2E2E',
+            background: '#ffffff'
+        },
+        options: {
+            customProperties: true
+        }
+    },
 
     axios: {
         //baseURL: 'http://127.0.0.1:3333/api'

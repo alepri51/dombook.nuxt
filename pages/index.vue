@@ -1,31 +1,61 @@
 <template>
-  <section class="section">
-    <!-- <div class="container">
-      <h1 class="title">Nuxt Auth</h1>
-      <p><nuxt-link to="/profile">PROFILE</nuxt-link></p>
-      <p><nuxt-link to="/building">building</nuxt-link></p>
-    </div> -->
+  <div>
 
-    <greet/>
+    <div>
+        <h2 class="ma-0 text-xs-center header-main-title">Портал поиска квартир<br/>в новостройках московского региона</h2>
+    </div>
     <enter/>
-    <numbers/>
-    <hot/>
-  </section>
+    <numbers :values="values"/>
+    <hot :buildings="values.newBuildings"/>
+  </div>
 </template>
 
 <script>
 
 export default {
-  components: {
-    greet: () => import('~/components/landing/head'),
-    enter: () => import('~/components/landing/enter'),
-    numbers: () => import('~/components/landing/numbers'),
-    hot: () => import('~/components/landing/hot')
-  },
-  watch: {
-      '$store.state.auth': (val) => {
-          //console.log('AUTH', val)
-      }
-  }
+    auth: false,
+    components: {
+        enter: () => import('~/components/landing/enter'),
+        numbers: () => import('~/components/landing/numbers'),
+        hot: () => import('~/components/landing/hot')
+    },
+    async asyncData(ctx) {
+        try {
+            let path = '/api/hot';
+            let data = await ctx.$axios.$get(path);
+
+            return {
+                values: data.entities.landing[0]
+            }
+        }
+        catch(err) {
+            debugger
+            //console.log(err);
+            //err = JSON.stringify(err, null, 2);
+            //err = err.replace(/\n/gi, '<br>').replace(/\"/gi, '');
+            ctx.error({ 
+                code: err.code,
+                message: err.message,
+                stack: err.stack,
+            });
+        }
+    },
+    data: () => ({
+        //values: {}
+        /* values: {
+            projects: {
+                total: 100,
+                new: 10
+            },
+            buildings: {
+                total: 100,
+                new: 10
+            },
+            lots: {
+                total: 100,
+                new: 10
+            },
+        } */
+    })
 };
 </script>

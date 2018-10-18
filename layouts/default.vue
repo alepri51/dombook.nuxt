@@ -1,19 +1,17 @@
 <template>
-  <div style="display: flex; flex-direction: column; height: 100vh">
-    <Navbar/>
-    <nuxt style="flex: 1"/>
+  <v-app>
+    <navigation/>
+    <nuxt/>
     <foot/>
-  </div>
+  </v-app>
 </template>
 
 <script>
-import Navbar from '~/components/Navbar';
-import foot from '~/components/footer';
 
 export default {
-  components: {
-    Navbar,
-    foot
-  }
+    components: {
+        navigation: () => import('~/components/common/navigation'),
+        foot: () => import('~/components/common/footer')
+    }
 };
 </script>

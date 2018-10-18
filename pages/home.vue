@@ -1,6 +1,6 @@
 <template>
   <div style="display: flex; flex-direction: column;">
-    <selction/>
+    <selection/>
     <div style="display: flex; flex-direction: row; flex: 1">
         <list style="flex: 2"/>
         <location style="flex: 3"/>
@@ -13,7 +13,7 @@
 export default {
     layout: 'nofooter',
     components: {
-        selction: () => import('~/components/home/selection'),
+        selection: () => import('~/components/home/selection'),
         list: () => import('~/components/home/list'),
         location: () => import('~/components/home/map')
     }
