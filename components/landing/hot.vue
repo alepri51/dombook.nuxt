@@ -18,6 +18,7 @@ export default {
     computed: {
         cards() {
             //ИЗМЕНИТЬ ЛОГИКУ ЧТО БЫ НА СЕРВЕРЕ И КЛИЕНТЕ ИЗНАЧАЛЬНО ОТРИСОВЫВАЛОСЬ ОДИНАКОВОЕ КОЛИЧЕСТВО
+            //let buildings = (this.$vuetify.breakpoint.name === 'lg') ? this.buildings.slice(0, 3) : this.buildings;
             let buildings = (!process.browser || this.$vuetify.breakpoint.name === 'lg') ? this.buildings.slice(0, 3) : this.buildings;
             return buildings;
         },

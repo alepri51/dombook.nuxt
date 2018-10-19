@@ -5,8 +5,8 @@
         <h2 class="ma-0 text-xs-center header-main-title">Портал поиска квартир<br/>в новостройках московского региона</h2>
     </div>
     <enter/>
-    <numbers :values="values"/>
-    <hot :buildings="values.newBuildings"/>
+    <numbers :values="dataset"/>
+    <hot :buildings="dataset.newBuildings"/>
   </div>
 </template>
 
@@ -19,43 +19,24 @@ export default {
         numbers: () => import('~/components/landing/numbers'),
         hot: () => import('~/components/landing/hot')
     },
-    async asyncData(ctx) {
-        try {
-            let path = '/api/hot';
-            let data = await ctx.$axios.$get(path);
-
-            return {
-                values: data.entities.landing[0]
-            }
-        }
-        catch(err) {
-            debugger
-            //console.log(err);
-            //err = JSON.stringify(err, null, 2);
-            //err = err.replace(/\n/gi, '<br>').replace(/\"/gi, '');
-            ctx.error({ 
-                code: err.code,
-                message: err.message,
-                stack: err.stack,
-            });
-        }
+    query: {
+        endpoint: 'hot',
+        method: 'get',
+        //merge: 'entities.landing.0'
+        merge: (data) => ({
+            dataset: data.entities.landing[0]
+        })
     },
+    /* asyncData(ctx) {
+        
+    }, */
     data: () => ({
-        //values: {}
-        /* values: {
-            projects: {
-                total: 100,
-                new: 10
-            },
-            buildings: {
-                total: 100,
-                new: 10
-            },
-            lots: {
-                total: 100,
-                new: 10
-            },
-        } */
-    })
+        //dataset => HERE WILL BE SERVER DATA
+        dataset: {}
+    }),
+    mounted() {
+        //this.dataset.lots.total = 1
+        //this.dataset.lots.new = 1
+    }
 };
 </script>

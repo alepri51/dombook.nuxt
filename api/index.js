@@ -29,17 +29,34 @@ router.use((req, res, next) => {
     next()
 });
 
-router.use(
+/* router.use(
     jwt({ secret: 'dummy' })
         .unless({
-            path: ['/api/login', '/api/logout', '/api/hot', '/api/me']
+            path: ['*']
+            //path: ['*', '/api/login', '/api/logout', '/api/hot', '/api/me', '/api/filters', '/api/about', '/api/building/*']
         })
-);
+); */
 
 router.all('/hot', async (req, res, next) => {
     try {
         let response = await axios.get('http://localhost:8001/api/landing');
         return res.json(response.data);
+    }
+    catch(err) {
+        console.log(err);
+        return next(err);
+    }
+
+});
+
+router.all('/filters', async (req, res, next) => {
+    try {
+        return res.json({
+            price: {
+                min: 10000,
+                max: 100000
+            }
+        });
     }
     catch(err) {
         console.log(err);
@@ -82,13 +99,25 @@ router.all('/me', (req, res) => {
     return res.json({ user: { username: 'demo', email: 'email' }})
 })
 
-router.all('/building/:id', (req, res) => {
-    return res.json({ building: { id: 'demo', _id: req.params.id }})
+router.all('/building/:id', async (req, res) => {
+    //return res.json({ building: { id: 'demo', _id: req.params.id }})
+    try {
+        let response = await axios.get('http://localhost:8001/api/building/' + req.params.id);
+        return res.json(response.data);
+    }
+    catch(err) {
+        console.log(err);
+        return next(err);
+    }
 })
 
 // Add POST - /api/logout
 router.all('/logout', (req, res) => {
     //delete req.session.authUser
+    res.json({ ok: true })
+})
+
+router.all('*', (req, res) => {
     res.json({ ok: true })
 })
 

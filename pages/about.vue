@@ -55,8 +55,10 @@
 </template>
 
 <script>
-  export default {
-  };
+export default {
+    //query: 'about111'
+    query: true
+}
 </script>
 
 <style scoped>

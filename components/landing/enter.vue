@@ -55,6 +55,9 @@
   //import Base from './class_base';
 
   export default {
+    meta: {
+        entity: 'enter'
+    },
     //extends: Base,
     components: {
         //questionnaire: () => import('~/components/landing/questionnaire')

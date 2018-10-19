@@ -267,17 +267,25 @@
   import moment from 'moment';
   import isEmpty from 'lodash/isEmpty';
   import 'swiper/dist/css/swiper.css';
-  import { swiper, swiperSlide } from 'vue-awesome-swiper';
+  //import { swiper, swiperSlide } from 'vue-awesome-swiper';
   import find from 'lodash/find';
   import forEach from 'lodash/forEach';
   import PhoneNumber from 'awesome-phonenumber';
 
   export default {
+    validate({ params }) {
+        return !isNaN(+params.id);
+    },
     components: {
       mainInfoList: () => import('~/components/building/mainInfoList'),
       objectHeading: () => import('~/components/building/objectPageHeading'),
-      swiper,
-      swiperSlide,
+      //swiper,
+      //swiperSlide,
+    },
+    query: {
+        merge: (data, params) => ({
+            entities: data.entities
+        })
     },
     //extends: Layout,
     data() {
@@ -342,7 +350,8 @@
     },
     computed: {
       filter() {
-        return (this.entities.buildingDetails && this.entities.buildingDetails[this.route.id]) || {};
+          //debugger
+        return (this.entities.buildingDetails && this.entities.buildingDetails[this.$route.params.id]) || {};
       },
       finishings() {
           let finishings = this.filter.finishings;

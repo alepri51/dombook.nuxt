@@ -12,6 +12,7 @@ module.exports = {
     router: {
         //middleware: [ 'history']
         //middleware: ['auth']
+        middleware: ['fetch']
     },
     /*
     ** Headers of the page
@@ -61,7 +62,7 @@ module.exports = {
     ],
 
     plugins: [
-        //'~/plugins/history.js'
+        '~/plugins/axios.js'
         //{src: '~/plugins/intercept.js', ssr: false}
     ],
 
@@ -88,7 +89,7 @@ module.exports = {
     },
 
     axios: {
-        //baseURL: 'http://127.0.0.1:3333/api'
+        baseURL: `${process.env.API_PROTOCOL || 'http'}://${process.env.API_HOST || 'localhost'}${process.env.API_PORT ? ':' + process.env.API_PORT : ''}${process.env.API_SUFFIX}`
     },
 
     auth: {
