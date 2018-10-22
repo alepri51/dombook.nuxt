@@ -46,7 +46,6 @@ router.all('/hot', async (req, res, next) => {
         console.log(err);
         return next(err);
     }
-
 });
 
 router.all('/filters', async (req, res, next) => {
