@@ -3,13 +3,13 @@ export const routeComponent = (route) => {
     return route.matched.length ? Object.values(route.matched[0].components)[0] : void 0;
 }
 
-export const path2val = (path, obj) => {
+const path2val = (path, obj) => {
     return path.split('.').reduce((memo, key) => {
         return memo && memo[key];
     }, obj);
 }
 
-export const routeOption = (route, key) => {
+const routeOption = (route, key) => {
     
     let value = void 0;
 
@@ -27,10 +27,8 @@ export const routeOption = (route, key) => {
     return value;
 }
 
-export default async function (context) {
-    let query = routeOption(context.route, 'query');
+const execute = async ({ context, query, component }) => {
     query = query === false ? false : query;
-    //query = query === false ? false : query || true;
 
     if(query) {
         let endpoint = typeof query === 'string' ? query : context.route.path;
@@ -39,7 +37,6 @@ export default async function (context) {
             
         const response = await context.store.dispatch('execute', query);
 
-        let component = routeComponent(context.route);
         let { merge = false } = query;
 
         if(component && merge) {
@@ -58,11 +55,34 @@ export default async function (context) {
                     break;
             }
 
-            component.options.asyncData = (ctx) => ({
+            return {
                 ...merge
-            });
+            }
 
             console.log(component.$data);
         }
     }
+}
+
+export default async function (context) {
+    //debugger
+
+    let merge = {};
+    let component = routeComponent(context.route);
+
+    let query = routeOption(context.route, 'query');
+    merge = query && await execute({ context, query, component });
+
+    let quieries = routeOption(context.route, 'queries');
+    if(quieries) {
+        for(let query of quieries) {
+            let data = await execute({ context, query, component });
+            merge = { ...merge, ...data };
+        }
+    }
+
+    component.options.asyncData = (ctx) => ({
+        ...merge
+    });
+
 }

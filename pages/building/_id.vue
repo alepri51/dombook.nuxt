@@ -258,7 +258,6 @@
 				</v-container>
 			</section>
 		</div>
-		<footer-section></footer-section>
     </div>
 </template>
 
@@ -268,6 +267,7 @@
   import isEmpty from 'lodash/isEmpty';
   import 'swiper/dist/css/swiper.css';
   //import { swiper, swiperSlide } from 'vue-awesome-swiper';
+  //import sw from 'vue-awesome-swiper';
   import find from 'lodash/find';
   import forEach from 'lodash/forEach';
   import PhoneNumber from 'awesome-phonenumber';
@@ -279,6 +279,8 @@
     components: {
       mainInfoList: () => import('~/components/building/mainInfoList'),
       objectHeading: () => import('~/components/building/objectPageHeading'),
+      swiper: () => import('~/node_modules/vue-awesome-swiper/src/swiper'),
+      swiperSlide: () => import('~/node_modules/vue-awesome-swiper/src/slide')
       //swiper,
       //swiperSlide,
     },
@@ -388,7 +390,7 @@
       },
       galleryImages() {
         let arr = [];
-        forEach(this.filter.building_photos, (photo) => {
+        forEach(this.filter.primary_photos, (photo) => {
           arr.push(photo);
         });
         arr.push({

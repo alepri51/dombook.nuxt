@@ -21,7 +21,7 @@
 
 		        <div class="greeting-button">
 			        <v-btn class="custom-round" color="secondary"
-			               @click="commit('SHOW_MODAL', { portrait: void 0 })">Искать по-новому
+			               @click="questionnaire.visible = true">Искать по-новому
 			        </v-btn>
 		        </div>
 		        <div class="greeting-button-description text-xs-center">Подбор квартиры по вашим<br/>потребностям и возможностям</div>
@@ -47,7 +47,7 @@
             </v-flex>
         </v-layout>
         
-		<!-- <questionnaire/> -->
+		<questionnaire :visible="questionnaire.visible" @close="questionnaire.visible = false"/>
     </v-container>
 </template>
 
@@ -55,15 +55,16 @@
   //import Base from './class_base';
 
   export default {
-    meta: {
-        entity: 'enter'
-    },
     //extends: Base,
     components: {
-        //questionnaire: () => import('~/components/landing/questionnaire')
+        questionnaire: () => import('~/components/modals/questionnaire')
     },
     data() {
-        return {};
+        return {
+            questionnaire: {
+                visible: false
+            }
+        };
     },
     methods: {},
   };

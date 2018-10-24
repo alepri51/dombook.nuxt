@@ -1,3 +1,5 @@
+import { Cache } from 'axios-extensions';
+
 export const getters = {
   isAuthenticated(state) {
     return state.auth.loggedIn
@@ -19,36 +21,44 @@ export const mutations = {
     }
 }
 
+const axios_cache = new Cache();
+
 export const actions = {
     async nuxtServerInit({ state, commit, dispatch }, { app, req }) {
-        return await dispatch('loadDefaults');
+        if(!state.filters) return await dispatch('loadDefaults');
     },
     async loadDefaults({ state }) {
         try {
-            let filters = await this.$axios.$get('filters');
-            state.filters = filters;
+            let { data } = await this.$axios.get('filters');
+            state.filters = data;
         }
         catch(err) {
             state.filters = {};
         }
     },
     async execute(context, { cache = true, method = 'get', endpoint = '/', payload, headers, callback, repeatOnError = false }) {
+        //let key = `${method}:${endpoint}`;
+        let key = `${endpoint}`;
+        let response = axios_cache.get(key);
+        
+        if(!response) {
+            headers = headers || {};
 
-        let response;
+            let config = {
+                url: endpoint,
+                method,
+                headers,
+                cache
+            };
 
-        headers = headers || {};
+            config.method === 'get' ? config.params = payload : config.data = payload;
+            //repeatOnError && (config.repeatOnError = { ...config, callback, code: repeatOnError });
 
-        let config = {
-            url: endpoint,
-            method,
-            headers,
-            cache
-        };
+            response = await this.$axios(config)
 
-        config.method === 'get' ? config.params = payload : config.data = payload;
-        //repeatOnError && (config.repeatOnError = { ...config, callback, code: repeatOnError });
+            cache && axios_cache.set(key, response);
 
-        response = await this.$axios(config);
+        }
         
         return response;
     }

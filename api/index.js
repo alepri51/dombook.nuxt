@@ -39,7 +39,7 @@ router.use((req, res, next) => {
 
 router.all('/hot', async (req, res, next) => {
     try {
-        let response = await axios.get('http://localhost:8001/api/landing');
+        let response = await axios.get('https://api.dombook.ru/api/landing');
         return res.json(response.data);
     }
     catch(err) {
@@ -47,6 +47,30 @@ router.all('/hot', async (req, res, next) => {
         return next(err);
     }
 });
+
+router.all('/building/:id', async (req, res) => {
+    //return res.json({ building: { id: 'demo', _id: req.params.id }})
+    try {
+        let response = await axios.get('https://api.dombook.ru/api/building/' + req.params.id);
+        return res.json(response.data);
+    }
+    catch(err) {
+        console.log(err);
+        return next(err);
+    }
+})
+
+router.all('/lot/:id', async (req, res) => {
+    //return res.json({ building: { id: 'demo', _id: req.params.id }})
+    try {
+        let response = await axios.get('https://api.dombook.ru/api/lot/' + req.params.id);
+        return res.json(response.data);
+    }
+    catch(err) {
+        console.log(err);
+        return next(err);
+    }
+})
 
 router.all('/filters', async (req, res, next) => {
     try {
@@ -98,17 +122,6 @@ router.all('/me', (req, res) => {
     return res.json({ user: { username: 'demo', email: 'email' }})
 })
 
-router.all('/building/:id', async (req, res) => {
-    //return res.json({ building: { id: 'demo', _id: req.params.id }})
-    try {
-        let response = await axios.get('http://localhost:8001/api/building/' + req.params.id);
-        return res.json(response.data);
-    }
-    catch(err) {
-        console.log(err);
-        return next(err);
-    }
-})
 
 // Add POST - /api/logout
 router.all('/logout', (req, res) => {

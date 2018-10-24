@@ -6,7 +6,7 @@
 			</div>
 		</h1>
 		<div class="main_info-subtitle">
-			<div v-if="objectData.address" class="title-address">{{ objectData.address.string}}</div>
+			<div v-if="objectData.address" class="title-address">{{ objectData.address}}</div>
 			<div v-if="objectData.subwayStations" class="station-lines">
 				<div v-for="(subway_station,index) in objectData.subwayStations" :key="index"
 				     class="title-address station-line">

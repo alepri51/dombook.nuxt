@@ -38,7 +38,8 @@ module.exports = {
     ** Build configuration
     */
     build: {
-        vendor: ['axios', 'vuetify'],
+        vendor: ['axios'],
+        //vendor: ['axios', 'vuetify'],
         extractCss: true,
         /*
         ** Run ESLint on save
@@ -66,9 +67,13 @@ module.exports = {
         //{src: '~/plugins/intercept.js', ssr: false}
     ],
 
+    env: {
+        baseURL: `${process.env.API_PROTOCOL || 'http'}://${process.env.API_HOST || 'localhost'}${process.env.API_PORT ? ':' + process.env.API_PORT : ''}${process.env.API_SUFFIX}`
+    },
+
     modules: [
         '@nuxtjs/vuetify',
-        '@nuxtjs/axios', 
+        //'@nuxtjs/axios', 
         '@nuxtjs/auth',
         //'~/modules/auth-intercept',
     ],
@@ -88,9 +93,9 @@ module.exports = {
         }
     },
 
-    axios: {
+    /* axios: {
         baseURL: `${process.env.API_PROTOCOL || 'http'}://${process.env.API_HOST || 'localhost'}${process.env.API_PORT ? ':' + process.env.API_PORT : ''}${process.env.API_SUFFIX}`
-    },
+    }, */
 
     auth: {
         plugins: [

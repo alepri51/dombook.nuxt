@@ -1,7 +1,7 @@
 <template>
 	<v-card tag="article" dark color="background" class="excerpt-item">
 		<v-img @click="goToBuilding(card.id)" class="white--text" :height="imageHeight"
-		       :src="card.building_photos[0].url">
+		       :src="card.primary_photos[0].url">
 			<div class="excerpt-banner">
 				<div class="excerpt-banner-item background--dark-grey">
 					<div class="banner-item-main">{{ isCurrentDateAfter(card.in_operation_date) ? 'Сдан' : getQuarter(card.in_operation_date) }}</div>

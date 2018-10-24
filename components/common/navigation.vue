@@ -16,7 +16,7 @@
                 </v-flex>
             </no-ssr>
 	        <v-flex d-flex align-end justify-end xs6 sm5 md2 lg2 xl2>
-                <v-btn @click="commit('SHOW_MODAL', { developing: void 0 })" class="toolbar-actions-btn">
+                <v-btn @click="developing.visible = true" class="toolbar-actions-btn">
                         <span class="actions-btn-icon"></span>
                         {{$vuetify.breakpoint.smAndUp ? 'Мои действия' : ''}}
                     </v-btn>
@@ -24,7 +24,7 @@
             </v-flex>
         </v-layout>
 
-        <!-- <developing></developing> -->
+        <developing :visible="developing.visible" @close="developing.visible = false"/>
         <!-- <signin/>
         <signup/>
         <signout/> -->
@@ -38,17 +38,16 @@
         //extends: Base,
         props: ['menu'],
         components: {
-/*             signin: () => import('./modals/signin'),
-            signup: () => import('./modals/signup'),
-          signout: () => import('./modals/signout'),
-          developing: () => import('./modals/developing'),
- */
+            developing: () => import('~/components/modals/developing')
         },
         data() {
             return {
-              active: void 0,
-              isCurrentRouteLanding: true,
-              bp: void 0
+                developing: {
+                    visible: false
+                },
+                active: void 0,
+                isCurrentRouteLanding: true,
+                bp: void 0
             }
         },
         created() {

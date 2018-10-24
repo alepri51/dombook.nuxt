@@ -20,7 +20,8 @@ export default {
         hot: () => import('~/components/landing/hot')
     },
     query: {
-        endpoint: 'hot',
+        //endpoint: 'hot',
+        endpoint: 'landing',
         method: 'get',
         //merge: 'entities.landing.0'
         merge: (data) => ({
